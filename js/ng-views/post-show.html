@@ -1,0 +1,20 @@
+<h2>This is a Post</h2>
+
+<h3>by: {{vm.post.user}}</h3>
+
+<img ng-src="{{vm.post.photoUrl}}">
+
+<h5>{{vm.post.comment}}</h5>
+
+<button ng-click="active = !active">Edit</button>
+<form ng-show="active">
+  <label>User</label>
+  <input ng-model="vm.post.user" value="vm.post.user">
+  <label>Comment</label>
+  <input ng-model="vm.post.comment" value="vm.post.comment">
+  <label>Photo URL</label>
+  <input ng-model="vm.post.photoUrl" value="vm.post.photoUrl">
+  <button ng-click="active = !active">Update</button>
+</form>
+
+<button ng-click="vm.delete()">Delete</button>

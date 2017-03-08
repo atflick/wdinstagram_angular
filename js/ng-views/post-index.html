@@ -1,0 +1,17 @@
+<h2>Current Posts</h2>
+
+<div ng-repeat="post in vm.posts">
+  <a ui-sref="postShow({id: $index})">{{ post.comment }}</a>
+</div>
+
+<h3>New Post</h3>
+
+<form ng-submit="vm.addPost()">
+  <label>User</label>
+  <input ng-model="vm.newPostUser">
+  <label>Comment</label>
+  <input ng-model="vm.newPostComment">
+  <label>Photo URL</label>
+  <input ng-model="vm.newPostPhotoUrl">
+  <button type="submit">Add</button>
+</form>
