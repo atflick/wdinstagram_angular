@@ -1,7 +1,7 @@
 <h2>Current Posts</h2>
 
 <div ng-repeat="post in vm.posts">
-  <a ui-sref="postShow({id: $index})">{{ post.comment }}</a>
+  <a ui-sref="postShow({id: post.id})">{{ post.body }}</a>
 </div>
 
 <h3>New Post</h3>

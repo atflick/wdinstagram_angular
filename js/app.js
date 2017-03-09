@@ -23,18 +23,27 @@ let instaData = [
 
 
 angular
-  .module("wdinstagram", ["ui.router"])
+  .module("wdinstagram", [
+    "ui.router",
+    "ngResource"
+  ])
   .config([
     "$stateProvider",
     RouterFunction
   ])
+  .factory("PostFactory", [
+    "$resource",
+    PostFactoryFunction
+  ])
   .controller("PostController", [
     "$stateParams",
+    "PostFactory",
     PostControllerFunction
   ])
   .controller("PostShowController", [
     "$stateParams",
     "$state",
+    "PostFactory",
     PostShowControllerFunction
   ])
 
@@ -54,20 +63,24 @@ function RouterFunction($stateProvider){
     })
 }
 
-function PostControllerFunction($state, $stateParams){
-  this.posts = instaData;
+function PostFactoryFunction($resource){
+  return $resource("http://localhost:3000/entries/:id")
+}
 
+function PostControllerFunction($stateParams, PostFactory){
+  this.posts = PostFactory.query();
+  console.log(this.posts);
   this.addPost = function(){
-    let post = {user: this.newPostUser, comment: this.newPostComment, photoUrl: this.newPostPhotoUrl};
+    let post = {author: this.newPostUser, body: this.newPostComment, photo_url: this.newPostPhotoUrl};
     this.posts.push(post);
   }
 }
 
-function PostShowControllerFunction ($stateParams, $state){
-  this.post = instaData[$stateParams.id];
-  this.posts = instaData;
+function PostShowControllerFunction ($stateParams, $state, PostFactory){
+  this.post = PostFactory.get({id: $stateParams.id});
+  console.log(this.post);
   this.delete = function(){
-    this.posts.splice($stateParams.id, 1);
+
     $state.go("postIndex");
   }
 }
