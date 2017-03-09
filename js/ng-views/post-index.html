@@ -8,10 +8,10 @@
 
 <form ng-submit="vm.addPost()">
   <label>User</label>
-  <input ng-model="vm.newPostUser">
+  <input ng-model="vm.post.author">
   <label>Comment</label>
-  <input ng-model="vm.newPostComment">
+  <input ng-model="vm.post.body">
   <label>Photo URL</label>
-  <input ng-model="vm.newPostPhotoUrl">
+  <input ng-model="vm.post.photo_url">
   <button type="submit">Add</button>
 </form>

@@ -37,6 +37,7 @@ angular
   ])
   .controller("PostController", [
     "$stateParams",
+    "$state",
     "PostFactory",
     PostControllerFunction
   ])
@@ -64,23 +65,30 @@ function RouterFunction($stateProvider){
 }
 
 function PostFactoryFunction($resource){
-  return $resource("http://localhost:3000/entries/:id")
+  return $resource("http://localhost:3000/entries/:id", {}, {
+    update: { method: "PUT" }
+  })
 }
 
-function PostControllerFunction($stateParams, PostFactory){
+function PostControllerFunction($stateParams, $state, PostFactory){
   this.posts = PostFactory.query();
-  console.log(this.posts);
+  this.post = new PostFactory();
   this.addPost = function(){
-    let post = {author: this.newPostUser, body: this.newPostComment, photo_url: this.newPostPhotoUrl};
-    this.posts.push(post);
+    this.post.$save(function(post){
+      $state.go("postShow", {id: post.id});
+    });
+
   }
 }
 
 function PostShowControllerFunction ($stateParams, $state, PostFactory){
   this.post = PostFactory.get({id: $stateParams.id});
-  console.log(this.post);
+  this.update = function(){
+    this.post.$update({id: $stateParams.id})
+  }
   this.delete = function(){
-
-    $state.go("postIndex");
+    this.post.$delete({id: $stateParams.id}, function(){
+      $state.go("postIndex");
+    })
   }
 }

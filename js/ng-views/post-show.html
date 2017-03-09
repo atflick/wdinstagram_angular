@@ -7,14 +7,14 @@
 <h5>{{vm.post.body}}</h5>
 
 <button ng-click="active = !active">Edit</button>
-<form ng-show="active">
+<form ng-show="active" ng-submit="vm.update()">
   <label>User</label>
   <input ng-model="vm.post.author" value="vm.post.author">
   <label>Comment</label>
   <input ng-model="vm.post.body" value="vm.post.body">
   <label>Photo URL</label>
   <input ng-model="vm.post.photo_url" value="vm.post.photo_url">
-  <button ng-click="active = !active">Update</button>
+  <button ng-click="active = !active" type="submit">Update</button>
 </form>
 
 <button ng-click="vm.delete()">Delete</button>
